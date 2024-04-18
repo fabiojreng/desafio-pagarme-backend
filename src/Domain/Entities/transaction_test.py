@@ -31,3 +31,18 @@ def test_create_transaction(valid_transaction_data):
     assert isinstance(transaction.get_card_expiration(), CardExpiration)
     assert transaction.get_card_expiration().get_value() == "12/24"
     assert transaction.get_cvv().get_value() == "123"
+
+
+def test_restore_transaction(valid_transaction_data):
+    transaction = Transaction.restore(**valid_transaction_data)
+
+    assert transaction.get_transaction_value().get_value() == 100.0
+    assert transaction.get_transaction_description().get_value() == "description"
+    assert isinstance(transaction.get_payment_method(), PaymentMethod)
+    assert transaction.get_payment_method().get_value() == "credit_card"
+    assert isinstance(transaction.get_card_number(), CardNumber)
+    assert transaction.get_card_number().get_value() == "6548"
+    assert transaction.get_cardholder_name().get_value() == "John Doe"
+    assert isinstance(transaction.get_card_expiration(), CardExpiration)
+    assert transaction.get_card_expiration().get_value() == "12/24"
+    assert transaction.get_cvv().get_value() == "123"
