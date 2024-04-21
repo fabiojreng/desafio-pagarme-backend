@@ -20,6 +20,13 @@ class Client:
     def restore(id, name: str, email: str):
         return Client(id, Name(name), Email(email))
 
+    def to_dict(self):
+        return {
+            "id": self.__id,
+            "client_name": self.__name.get_value(),
+            "client_email": self.__email.get_value(),
+        }
+
     def get_id(self):
         return self.__id
 

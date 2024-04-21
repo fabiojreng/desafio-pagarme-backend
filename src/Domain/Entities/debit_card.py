@@ -28,3 +28,14 @@ class DebitCard(Payable):
     @classmethod
     def restore(cls, payment_id, transaction, client):
         return cls(payment_id, transaction, client)
+
+    def to_dict(self):
+        return {
+            "payment_id": self._id,
+            "status": self._status,
+            "client_name": self._client_name,
+            "transaction_id": self._transaction_id,
+            "transaction_value": self._transaction_value,
+            "payment_date": self._payment_date,
+            "amount": self._amount,
+        }
