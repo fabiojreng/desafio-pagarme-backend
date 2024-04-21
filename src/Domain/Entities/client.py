@@ -1,3 +1,4 @@
+import uuid
 from src.Domain.VO.Client.name import Name
 from src.Domain.VO.Client.email import Email
 
@@ -11,7 +12,12 @@ class Client:
         self.__saldo_waiting_funds: float
 
     @staticmethod
-    def create(id, name: str, email: str):
+    def create(name: str, email: str):
+        id = uuid.uuid4()
+        return Client(id, Name(name), Email(email))
+
+    @staticmethod
+    def restore(id, name: str, email: str):
         return Client(id, Name(name), Email(email))
 
     def get_id(self):
