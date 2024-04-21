@@ -11,7 +11,7 @@ from src.Domain.VO.Transaction.transaction_value import TransactionValue
 class Transaction:
     def __init__(
         self,
-        # id: str,
+        id: str,
         transaction_value: TransactionValue,
         transaction_description: TransactionDescription,
         payment_method: PaymentMethod,
@@ -20,7 +20,7 @@ class Transaction:
         card_expiration: CardExpiration,
         cvv: CVV,
     ) -> None:
-        # self.__id = id
+        self.__id = id
         self.__transaction_value = transaction_value
         self.__transaction_description = transaction_description
         self.__payment_method = payment_method
@@ -39,9 +39,9 @@ class Transaction:
         card_expiration: str,
         cvv: str,
     ):
-        # id = uuid.uuid4()
+        id = uuid.uuid4()
         return Transaction(
-            # id,
+            id,
             TransactionValue(transaction_value),
             TransactionDescription(transaction_description),
             PaymentMethod(payment_method),
@@ -52,7 +52,7 @@ class Transaction:
         )
 
     def restore(
-        # id: str,
+        id: str,
         transaction_value: float,
         transaction_description: str,
         payment_method: str,
@@ -62,7 +62,7 @@ class Transaction:
         cvv: str,
     ):
         return Transaction(
-            # id,
+            id,
             TransactionValue(transaction_value),
             TransactionDescription(transaction_description),
             PaymentMethod(payment_method),
@@ -72,8 +72,17 @@ class Transaction:
             CVV(cvv),
         )
 
-    def __str__(self):
-        return f"Transaction Value: {self.__transaction_value}, Description: {self.__transaction_description}, Payment Method: {self.__payment_method}, Card Number: {self.__card_number}, Cardholder Name: {self.__cardholder_name}, Card Expiration: {self.__card_expiration}, CVV: {self.__cvv}"
+    def to_dict(self):
+        return {
+            "id": self.__id,
+            "transaction_value": self.__transaction_value.get_value(),
+            "transaction_description": self.__transaction_description.get_value(),
+            "payment_method": self.__payment_method.get_value(),
+            "card_number": self.__card_number.get_value(),
+            "cardholder_name": self.__cardholder_name.get_value(),
+            "card_expiration": self.__card_expiration.get_value(),
+            "cvv": self.__cvv.get_value(),
+        }
 
     def get_id(self):
         return self.__id
