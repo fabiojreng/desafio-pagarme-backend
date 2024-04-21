@@ -20,11 +20,11 @@ class DebitCard(Payable):
         amount = transaction_value - fee
         return amount
 
-    @staticmethod
-    def create(transaction, client):
+    @classmethod
+    def create(cls, transaction, client):
         payment_id = uuid.uuid4()
-        return DebitCard(payment_id, transaction, client)
+        return cls(payment_id, transaction, client)
 
-    @staticmethod
-    def restore(payment_id, transaction, client):
-        return DebitCard(payment_id, transaction, client)
+    @classmethod
+    def restore(cls, payment_id, transaction, client):
+        return cls(payment_id, transaction, client)

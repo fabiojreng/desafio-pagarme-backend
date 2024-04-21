@@ -20,9 +20,9 @@ class Payable(ABC):
         pass
 
     @abstractmethod
-    def create(transaction, client):
+    def create(cls, transaction, client):
         pass
 
     @abstractmethod
-    def restore(payment_id, transaction, client):
+    def restore(cls, payment_id, transaction, client):
         pass
