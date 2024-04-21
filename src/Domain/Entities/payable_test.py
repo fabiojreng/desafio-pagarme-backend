@@ -10,6 +10,7 @@ from .credit_card import CreditCard
 @pytest.fixture
 def sample_transaction():
     return Transaction(
+        "12345678",
         100.0,
         "description",
         "credit_card",
