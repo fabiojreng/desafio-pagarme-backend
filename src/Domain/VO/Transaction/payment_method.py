@@ -3,7 +3,7 @@ class PaymentMethod:
         valid_methods = ["debit_card", "credit_card"]
         if method not in valid_methods:
             raise ValueError(
-                "Método de pagamento inválido. Use 'credit_card' ou 'debit_card'."
+                "Invalid payment method. Use 'credit_card' or 'debit_card'"
             )
         self.__payment_method = method
 

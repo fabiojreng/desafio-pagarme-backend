@@ -2,7 +2,7 @@ class TransactionValue:
     def __init__(self, transaction_value: float) -> None:
         if transaction_value <= 0:
             raise ValueError(
-                "Não é possível criar transação com valor negativo ou nulo"
+                "It is not possible to create a transaction with a negative or null value"
             )
         self.__transaction_value = transaction_value
 
