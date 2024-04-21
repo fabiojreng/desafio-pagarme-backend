@@ -9,7 +9,3 @@ class CardNumber:
 
     def get_value(self) -> str:
         return self.__card_number
-
-
-card = CardNumber("1215 1531 5345 6548")
-print(card.get_value())
