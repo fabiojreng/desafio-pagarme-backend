@@ -1,6 +1,3 @@
-import os, sys
-
-sys.path.insert(0, os.path.abspath(os.curdir))
 from src.Application.UseCases.interface_use_case import UseCaseInterface
 from src.Domain.Entities.transaction import Transaction
 from src.Domain.Repository.repository import RepositoryInterface
