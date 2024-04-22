@@ -15,14 +15,14 @@ class FlaskAdapter(HttpServer):
 
         view_name = f"{method.lower()}_{url.replace('/', '_')}_callback"
 
-        def flask_callback(*args, **kwargs):
+        async def flask_callback(*args, **kwargs):
             try:
                 if request.method == "GET":
-                    output = callback(*args, **kwargs)
+                    output = await callback(*args, **kwargs)
                     return jsonify(output)
                 else:
                     data = request.json
-                    output = callback(data)
+                    output = await callback(data)
                     return Response(
                         json.dumps(output, sort_keys=False), mimetype="application/json"
                     )
