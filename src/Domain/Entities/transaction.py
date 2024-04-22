@@ -74,7 +74,7 @@ class Transaction:
 
     def to_dict(self):
         return {
-            "id": self.__id,
+            "id": str(self.__id),
             "transaction_value": self.__transaction_value.get_value(),
             "transaction_description": self.__transaction_description.get_value(),
             "payment_method": self.__payment_method.get_value(),
