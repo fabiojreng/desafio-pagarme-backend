@@ -6,7 +6,7 @@ from src.Domain.Entities.client import Client
 
 class RepositoryInterface(ABC):
     @abstractmethod
-    def save_transaction(self, Transaction: Transaction) -> Transaction:
+    def save_transaction(self, transaction: Transaction) -> Transaction:
         pass
 
     @abstractmethod
