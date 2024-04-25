@@ -11,9 +11,10 @@ class Payable(ABC):
         self._id = payment_id
         self._amount = None
         self._transaction_value = transaction["transaction_value"]
-        self._transaction_id = transaction["id"]
+        self._transaction_id = transaction["transaction_id"]
         self._card_number = transaction["card_number"]
-        self._client_name = client["client_name"]
+        self._client_name = client["name"]
+        self._client_id = client["id"]
         self._status = None
         self._payment_date = None
 
