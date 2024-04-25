@@ -21,13 +21,16 @@ class FlaskAdapter(HttpServer):
                     output = callback(*args, **kwargs)
                     return jsonify(output)
                 else:
-                    data = request.json
-                    output = callback(data)
-                    return Response(
-                        json.dumps(output, sort_keys=False), mimetype="application/json"
+                    output = callback(request.json)
+                    return (
+                        Response(
+                            json.dumps(output, sort_keys=False),
+                            mimetype="application/json",
+                        ),
+                        output["status_code"],
                     )
             except Exception as e:
-                return jsonify({"error": str(e)}), 400
+                return jsonify({"status_code": 400, "error": str(e)}), 400
 
         flask_callback.__name__ = view_name
 
