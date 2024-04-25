@@ -3,6 +3,7 @@ from src.Domain.Entities.debit_card import DebitCard
 
 
 class FactoryPayable:
+    @staticmethod
     def create(transaction, client):
         if transaction["payment_method"] == "debit_card":
             return DebitCard.create(transaction, client).to_dict()
