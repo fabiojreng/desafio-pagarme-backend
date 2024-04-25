@@ -22,9 +22,9 @@ class Client:
 
     def to_dict(self):
         return {
-            "id": self.__id,
-            "client_name": self.__name.get_value(),
-            "client_email": self.__email.get_value(),
+            "id": str(self.__id),
+            "name": self.__name.get_value(),
+            "email": self.__email.get_value(),
         }
 
     def get_id(self):
