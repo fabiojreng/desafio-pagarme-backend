@@ -12,8 +12,8 @@ class Transaction:
     def __init__(
         self,
         transaction_id: str,
-        client_id: str,
         transaction_value: TransactionValue,
+        client_id: str,
         transaction_description: TransactionDescription,
         payment_method: PaymentMethod,
         card_number: CardNumber,
@@ -80,9 +80,9 @@ class Transaction:
 
     def to_dict(self):
         return {
-            "transaction_id": str(self.__id),
+            "transaction_id": str(self.__transaction_id),
             "transaction_value": self.__transaction_value.get_value(),
-            "client_id": self.get_client_id,
+            "client_id": self.__client_id,
             "transaction_description": self.__transaction_description.get_value(),
             "payment_method": self.__payment_method.get_value(),
             "card_number": self.__card_number.get_value(),
@@ -98,7 +98,7 @@ class Transaction:
         return self.__transaction_value
 
     def get_client_id(self):
-        return self.get_client_id
+        return self.__client_id
 
     def get_transaction_description(self):
         return self.__transaction_description

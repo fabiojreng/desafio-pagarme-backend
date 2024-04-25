@@ -33,12 +33,10 @@ class DebitCard(Payable):
     def to_dict(self):
         return {
             "amount": self._amount,
-            "payment_id": self._id,
-            "status": self._status,
             "payment_method": self._payment_method,
-            "client_name": self._client_name,
-            "transaction_id": self._transaction_id,
-            "transaction_value": self._transaction_value,
-            "payment_date": self._payment_date,
             "card_number": self._card_number,
+            "payment_id": str(self._id),
+            "status": self._status,
+            "client_id": self._client_id,
+            "payment_date": self._payment_date,
         }
