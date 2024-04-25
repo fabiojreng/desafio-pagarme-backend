@@ -12,6 +12,7 @@ class DebitCard(Payable):
         super().__init__(payment_id, transaction, client)
         self._amount = self.calculate_amount(self._transaction_value)
         self._status = "Paid"
+        self._payment_method = "debit_card"
         self._payment_date = datetime.now()
         # client.__saldo_available = self._amount
 
@@ -31,11 +32,13 @@ class DebitCard(Payable):
 
     def to_dict(self):
         return {
+            "amount": self._amount,
             "payment_id": self._id,
             "status": self._status,
+            "payment_method": self._payment_method,
             "client_name": self._client_name,
             "transaction_id": self._transaction_id,
             "transaction_value": self._transaction_value,
             "payment_date": self._payment_date,
-            "amount": self._amount,
+            "card_number": self._card_number,
         }
