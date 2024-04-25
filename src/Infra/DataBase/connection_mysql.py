@@ -1,31 +1,34 @@
-import os
-from dotenv import load_dotenv
-import aiomysql
 from src.Infra.DataBase.interface_connection import ConnectionInterface
+import mysql.connector
+from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
 
 class ConnectionMySql(ConnectionInterface):
 
-    async def connect(self) -> None:
-        self.connection = await aiomysql.connect(
+    def connect(self) -> None:
+        self.connection = mysql.connector.connect(
             host=os.getenv("DB_HOST"),
-            port=int(os.getenv("DB_PORT")),
+            port=os.getenv("DB_PORT"),
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
-            db=os.getenv("DB_NAME"),
+            database=os.getenv("DB_NAME"),
         )
 
-    async def query(self, statement: str, params: list = None):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(statement, params)
-            if statement.strip().split(maxsplit=1)[0].upper() == "SELECT":
-                result = await cursor.fetchall()
-            else:
-                await self.connection.commit()
-                result = None
+    def query(self, statement: str, params: list = None):
+        cursor = self.connection.cursor()
+
+        cursor.execute(statement, params)
+
+        if statement.strip().split(maxsplit=1)[0].upper() == "SELECT":
+            result = cursor.fetchall()
+        else:
+            result = self.connection.commit()
+
+        cursor.close()
         return result
 
-    async def close(self) -> None:
-        await self.connection.close()
+    def close(self) -> None:
+        self.connection.close()
