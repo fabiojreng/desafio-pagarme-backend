@@ -11,7 +11,8 @@ from src.Domain.VO.Transaction.transaction_value import TransactionValue
 class Transaction:
     def __init__(
         self,
-        id: str,
+        transaction_id: str,
+        client_id: str,
         transaction_value: TransactionValue,
         transaction_description: TransactionDescription,
         payment_method: PaymentMethod,
@@ -20,7 +21,8 @@ class Transaction:
         card_expiration: CardExpiration,
         cvv: CVV,
     ) -> None:
-        self.__id = id
+        self.__transaction_id = transaction_id
+        self.__client_id = client_id
         self.__transaction_value = transaction_value
         self.__transaction_description = transaction_description
         self.__payment_method = payment_method
@@ -32,6 +34,7 @@ class Transaction:
     @staticmethod
     def create(
         transaction_value: float,
+        client_id: str,
         transaction_description: str,
         payment_method: str,
         card_number: str,
@@ -39,10 +42,11 @@ class Transaction:
         card_expiration: str,
         cvv: str,
     ):
-        id = uuid.uuid4()
+        transaction_id = uuid.uuid4()
         return Transaction(
-            id,
+            transaction_id,
             TransactionValue(transaction_value),
+            client_id,
             TransactionDescription(transaction_description),
             PaymentMethod(payment_method),
             CardNumber(card_number),
@@ -52,8 +56,9 @@ class Transaction:
         )
 
     def restore(
-        id: str,
+        transaction_id: str,
         transaction_value: float,
+        client_id: str,
         transaction_description: str,
         payment_method: str,
         card_number: str,
@@ -62,8 +67,9 @@ class Transaction:
         cvv: str,
     ):
         return Transaction(
-            id,
+            transaction_id,
             TransactionValue(transaction_value),
+            client_id,
             TransactionDescription(transaction_description),
             PaymentMethod(payment_method),
             CardNumber(card_number),
@@ -74,8 +80,9 @@ class Transaction:
 
     def to_dict(self):
         return {
-            "id": str(self.__id),
+            "transaction_id": str(self.__id),
             "transaction_value": self.__transaction_value.get_value(),
+            "client_id": self.get_client_id,
             "transaction_description": self.__transaction_description.get_value(),
             "payment_method": self.__payment_method.get_value(),
             "card_number": self.__card_number.get_value(),
@@ -84,11 +91,14 @@ class Transaction:
             "cvv": self.__cvv.get_value(),
         }
 
-    def get_id(self):
-        return self.__id
+    def get_transaction_id(self):
+        return self.__transaction_id
 
     def get_transaction_value(self):
         return self.__transaction_value
+
+    def get_client_id(self):
+        return self.get_client_id
 
     def get_transaction_description(self):
         return self.__transaction_description
