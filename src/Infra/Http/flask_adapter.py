@@ -1,33 +1,38 @@
-from flask import Flask, jsonify, request, json, Response
+from flask import Flask, request, json, Response
 from src.Infra.Http.interface_server_http import HttpServer
 
 
 class FlaskAdapter(HttpServer):
     def __init__(self) -> None:
         self.__app = Flask(__name__)
-        self.__app.config["JSON_SORT_KEYS"] = False
 
     def register(self, method, url, callback):
-        if not callable(callback):
-            raise ValueError("Callback must be a callable function")
-        if not isinstance(url, str):
-            raise ValueError("URL must be a string")
-
         view_name = f"{method.lower()}_{url.replace('/', '_')}_callback"
 
         def flask_callback(*args, **kwargs):
             try:
                 if request.method == "GET":
-                    output = callback(*args, **kwargs)
-                    return jsonify(output)
+                    output = callback(request.view_args)
+
                 else:
                     output = callback(request.json)
-                    return Response(
+                return (
+                    Response(
                         json.dumps(output, sort_keys=False),
                         mimetype="application/json",
-                    )
+                    ),
+                    output["status_code"],
+                )
             except Exception as e:
-                return jsonify({"status_code": 400, "body": str(e)})
+                return (
+                    Response(
+                        json.dumps(
+                            {"status_code": 400, "body": str(e)}, sort_keys=False
+                        ),
+                        mimetype="application/json",
+                    ),
+                    400,
+                )
 
         flask_callback.__name__ = view_name
 
