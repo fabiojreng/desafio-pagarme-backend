@@ -34,4 +34,7 @@ class TransactionRepositoryMySQL(TransactionRepositoryInterface):
         return output
 
     def find_all_transactions(self):
-        pass
+        self.__mysql.connect()
+        output = self.__mysql.query("SELECT * FROM transactions")
+        self.__mysql.close()
+        return output
