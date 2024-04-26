@@ -16,5 +16,5 @@ class PayableRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def get_payble_client(self, client_id):
+    def get_payble_client(self, client_id, status):
         pass
