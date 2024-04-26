@@ -22,10 +22,26 @@ class PayableRepositoryMySQL(PayableRepositoryInterface):
         self.__mysql.close()
 
     def get_payble_id(self, id: str):
-        pass
+        self.__mysql.connect()
+        payable = self.__mysql.query("SELECT * FROM payables WHERE id = %s", [id])
+        if not payable:
+            return None
+        self.__mysql.close()
+        return payable
 
     def find_all_payable(self):
-        pass
+        self.__mysql.connect()
+        output = self.__mysql.query("SELECT * FROM payables")
+        self.__mysql.close()
+        return output
 
-    def get_payble_client(self, client_id):
-        pass
+    def get_payble_client(self, client_id, status):
+        self.__mysql.connect()
+        payable = self.__mysql.query(
+            "SELECT * FROM payables WHERE client_id = %s AND status = %s",
+            [client_id, status],
+        )
+        if not payable:
+            return None
+        self.__mysql.close()
+        return payable
