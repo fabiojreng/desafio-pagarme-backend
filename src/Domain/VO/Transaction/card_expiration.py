@@ -7,13 +7,10 @@ class CardExpiration:
 
     def __verify_expiration_date(self, expiration: str) -> datetime:
         expiration = expiration.replace(" ", "")
-        try:
-            expiration_date = datetime.strptime(expiration, "%m/%y")
-            if expiration_date < datetime.now():
-                raise ValueError("The expiration date cannot be in the past")
-            return expiration_date.strftime("%m/%y")
-        except ValueError as e:
-            raise ValueError(str(e))
+        expiration_date = datetime.strptime(expiration, "%m/%y")
+        if expiration_date < datetime.now():
+            raise ValueError("The expiration date cannot be in the past")
+        return expiration_date.strftime("%m/%y")
 
     def get_value(self) -> str:
         return self.__expiration_date
