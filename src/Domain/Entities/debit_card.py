@@ -14,7 +14,6 @@ class DebitCard(Payable):
         self._status = "Paid"
         self._payment_method = "debit_card"
         self._payment_date = datetime.now()
-        # client.__saldo_available = self._amount
 
     def calculate_amount(self, transaction_value):
         fee = 0.03 * transaction_value

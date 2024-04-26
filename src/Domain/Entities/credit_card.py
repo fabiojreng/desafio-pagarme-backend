@@ -14,7 +14,6 @@ class CreditCard(Payable):
         self._status = "Waiting_funds"
         self._payment_method = "credit_card"
         self._payment_date = datetime.now() + timedelta(days=30)
-        # client.get_saldo_waiting_funds = self._amount
 
     def calculate_amount(self, transaction_value):
         fee = 0.05 * transaction_value
