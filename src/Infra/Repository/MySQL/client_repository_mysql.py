@@ -18,8 +18,11 @@ class ClientRepositoryMySQL(ClientRepositoryInterface):
     def get_client_id(self, id: str):
         self.__mysql.connect()
         client = self.__mysql.query("SELECT * FROM clients WHERE id = %s", [id])
+        if not client:
+            return None
+        client_id, client_name, client_email = client[0]
+        output = Client.restore(client_id, client_name, client_email).to_dict()
         self.__mysql.close()
-        output = Client.restore(client[0][0], client[0][1], client[0][2]).to_dict()
         return output
 
     def get_client_email(self, email: str):
@@ -29,4 +32,7 @@ class ClientRepositoryMySQL(ClientRepositoryInterface):
         return output
 
     def find_all_clients(self):
-        pass
+        self.__mysql.connect()
+        output = self.__mysql.query("SELECT * FROM clients")
+        self.__mysql.close()
+        return output
