@@ -8,8 +8,6 @@ class Client:
         self.__id = id
         self.__name = name
         self.__email = email
-        self.__saldo_available: float
-        self.__saldo_waiting_funds: float
 
     @staticmethod
     def create(name: str, email: str):
@@ -35,9 +33,3 @@ class Client:
 
     def get_email(self):
         return self.__email
-
-    def get_saldo_available(self):
-        return self.__saldo_available
-
-    def get_saldo_waiting_funds(self):
-        return self.__saldo_waiting_funds
