@@ -11,24 +11,12 @@ class CreateClientUseCase(UseCaseInterface):
         try:
             client_exists = self.__client_repository.get_client_email(params["email"])
             if client_exists:
-                return {
-                    "status_code": 422,
-                    "body": "Client already exists",
-                }
+                return {"status_code": 422, "body": "Client already exists"}
 
             client = Client.create(params["name"], params["email"]).to_dict()
             self.__client_repository.save_client(client)
-            return {
-                "status_code": 201,
-                "body": client,
-            }
+            return {"status_code": 201, "body": client}
         except Exception as e:
             if isinstance(e, Exception):
-                return {
-                    "status_code": 422,
-                    "body": str(e),
-                }
-            return {
-                "status_code": 500,
-                "body": "Unexpected Error",
-            }
+                return {"status_code": 422, "body": str(e)}
+            return {"status_code": 500, "body": "Unexpected Error"}

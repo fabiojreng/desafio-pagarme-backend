@@ -6,7 +6,7 @@ class FindAllTransactionsUseCase(UseCaseInterface):
     def __init__(self, transaction_repository: TransactionRepositoryInterface) -> None:
         self.__transaction_repository = transaction_repository
 
-    def execute(self):
+    def execute(self, params):
         try:
             transactions = self.__transaction_repository.find_all_transactions()
             if transactions:
@@ -24,15 +24,10 @@ class FindAllTransactionsUseCase(UseCaseInterface):
                     }
                     for transaction in transactions
                 ]
+
             return {"status_code": 200, "body": output}
 
         except Exception as e:
             if isinstance(e, Exception):
-                return {
-                    "status_code": 422,
-                    "body": str(e),
-                }
-            return {
-                "status_code": 500,
-                "body": "Unexpected Error",
-            }
+                return {"status_code": 422, "body": str(e)}
+            return {"status_code": 500, "body": "Unexpected Error"}

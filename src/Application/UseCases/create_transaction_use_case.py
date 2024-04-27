@@ -22,10 +22,8 @@ class CreateTransactionUseCase(UseCaseInterface):
         try:
             client = self.__client_repository.get_client_id(params["client_id"])
             if not client:
-                return {
-                    "status_code": 404,
-                    "body": "Client not found",
-                }
+                return {"status_code": 404, "body": "Client not found"}
+
             transaction = Transaction.create(
                 params["transaction_value"],
                 params["client_id"],
@@ -36,6 +34,7 @@ class CreateTransactionUseCase(UseCaseInterface):
                 params["card_expiration"],
                 params["cvv"],
             ).to_dict()
+
             payable = FactoryPayable.create(transaction, client)
             self.__transaction_repository.save_transaction(transaction)
             self.__payble_repository.save_payable(payable)
@@ -43,7 +42,7 @@ class CreateTransactionUseCase(UseCaseInterface):
             return {
                 "status_code": 201,
                 "body": {
-                    "amount": payable["amount"],
+                    "amount": round(payable["amount"], 2),
                     "payment_method": payable["payment_method"],
                     "card_number": payable["card_number"],
                     "payment_id": payable["payment_id"],
@@ -51,11 +50,5 @@ class CreateTransactionUseCase(UseCaseInterface):
             }
         except Exception as e:
             if isinstance(e, Exception):
-                return {
-                    "status_code": 422,
-                    "body": str(e),
-                }
-            return {
-                "status_code": 500,
-                "body": "Unexpected Error",
-            }
+                return {"status_code": 422, "body": str(e)}
+            return {"status_code": 500, "body": "Unexpected Error"}

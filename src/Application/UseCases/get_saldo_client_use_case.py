@@ -14,12 +14,14 @@ class GetSaldoClientUseCase(UseCaseInterface):
 
     def execute(self, params):
         try:
+            valid_params = ["Paid", "Waiting_funds"]
+            if params["status"] not in valid_params:
+                return {"status_code": 403, "body": "Invalid balance type"}
+
             client = self.__client_repository.get_client_id(params["client_id"])
             if not client:
-                return {
-                    "status_code": 404,
-                    "body": "Client not found",
-                }
+                return {"status_code": 404, "body": "Client not found"}
+
             payables = self.__payable_repository.get_payble_client(
                 params["client_id"],
                 params["status"],
@@ -34,22 +36,19 @@ class GetSaldoClientUseCase(UseCaseInterface):
                 }
 
             values = [float(amount[2]) for amount in payables]
-            amount = 0.0
+            saldo = 0.0
             for value in values:
-                amount += value
+                saldo += value
 
             return {
                 "status_code": 200,
-                "body": {"status": params["status"], "amount": amount},
+                "body": {
+                    "status": params["status"],
+                    "body": {"client": client["name"], "saldo": saldo},
+                },
             }
 
         except Exception as e:
             if isinstance(e, Exception):
-                return {
-                    "status_code": 422,
-                    "body": str(e),
-                }
-            return {
-                "status_code": 500,
-                "body": "Unexpected Error",
-            }
+                return {"status_code": 422, "body": str(e)}
+            return {"status_code": 500, "body": "Unexpected Error"}
