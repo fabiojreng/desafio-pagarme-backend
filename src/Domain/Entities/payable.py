@@ -25,7 +25,3 @@ class Payable(ABC):
     @abstractmethod
     def create(cls, transaction, client):
         pass
-
-    @abstractmethod
-    def restore(cls, payment_id, transaction, client):
-        pass

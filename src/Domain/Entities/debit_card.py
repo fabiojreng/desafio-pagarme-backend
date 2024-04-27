@@ -25,10 +25,6 @@ class DebitCard(Payable):
         payment_id = uuid.uuid4()
         return cls(payment_id, transaction, client)
 
-    @classmethod
-    def restore(cls, payment_id, transaction, client):
-        return cls(payment_id, transaction, client)
-
     def to_dict(self):
         return {
             "amount": self._amount,
