@@ -18,6 +18,7 @@ from src.Application.UseCases.find_all_transactions_use_case import (
     FindAllTransactionsUseCase,
 )
 from src.Application.UseCases.get_saldo_client_use_case import GetSaldoClientUseCase
+from src.Application.UseCases.get_payable_by_id_use_case import GetPayableById
 
 
 server = FlaskAdapter()
@@ -30,6 +31,9 @@ transaction = CreateTransactionUseCase(db_transaction, db_client, db_payable)
 client = CreateClientUseCase(db_client)
 transactions = FindAllTransactionsUseCase(db_transaction)
 client_saldo = GetSaldoClientUseCase(db_client, db_payable)
+get_payable_by_id = GetPayableById(db_payable)
 
-MainController(server, transaction, client, transactions, client_saldo)
+MainController(
+    server, transaction, client, transactions, client_saldo, get_payable_by_id
+)
 server.listen(3333)
