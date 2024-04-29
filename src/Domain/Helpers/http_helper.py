@@ -32,7 +32,7 @@ def created(data: dict[str, any]) -> HttpResponse:
     return HttpResponse(
         status_code=201,
         body={
-            "type": "Success",
+            "type": "Created",
             "message": data.get("message"),
             "data": data.get("data"),
         },
@@ -54,6 +54,16 @@ def not_found(error: Exception) -> HttpResponse:
         status_code=404,
         body={
             "type": "NotFound",
+            "error": {"message": error},
+        },
+    ).to_dict()
+
+
+def forbidden(error: Exception) -> HttpResponse:
+    return HttpResponse(
+        status_code=403,
+        body={
+            "type": "Forbidden",
             "error": {"message": error},
         },
     ).to_dict()
