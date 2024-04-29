@@ -4,6 +4,13 @@ from src.Domain.Repository.transaction_repository import TransactionRepositoryIn
 from src.Domain.Repository.client_repository import ClientRepositoryInterface
 from src.Domain.Entities.factory_payable import FactoryPayable
 from src.Domain.Repository.payable_repository import PayableRepositoryInterface
+from src.Domain.Helpers.http_helper import (
+    HttpResponse,
+    not_found,
+    created,
+    server_error,
+    unprocessable_entity,
+)
 
 
 class CreateTransactionUseCase(UseCaseInterface):
@@ -18,11 +25,11 @@ class CreateTransactionUseCase(UseCaseInterface):
         self.__client_repository = client_repository
         self.__payble_repository = payable_repository
 
-    def execute(self, params):
+    def execute(self, params: any) -> HttpResponse:
         try:
             client = self.__client_repository.get_client_id(params["client_id"])
             if not client:
-                return {"status_code": 404, "body": "Client not found"}
+                return not_found("Client not found")
 
             transaction = Transaction.create(
                 params["transaction_value"],
@@ -39,16 +46,18 @@ class CreateTransactionUseCase(UseCaseInterface):
             self.__transaction_repository.save_transaction(transaction)
             self.__payble_repository.save_payable(payable)
 
-            return {
-                "status_code": 201,
-                "body": {
-                    "amount": round(payable["amount"], 2),
-                    "payment_method": payable["payment_method"],
-                    "card_number": payable["card_number"],
-                    "payment_id": payable["payment_id"],
-                },
-            }
+            return created(
+                {
+                    "message": "Transaction created successfully",
+                    "data": {
+                        "amount": round(payable["amount"], 2),
+                        "payment_method": payable["payment_method"],
+                        "card_number": payable["card_number"],
+                        "payment_id": payable["payment_id"],
+                    },
+                }
+            )
         except Exception as e:
             if isinstance(e, Exception):
-                return {"status_code": 422, "body": str(e)}
-            return {"status_code": 500, "body": "Unexpected Error"}
+                return unprocessable_entity(str(e))
+            return server_error("Unexpected Error")
