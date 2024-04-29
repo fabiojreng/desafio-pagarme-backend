@@ -47,3 +47,13 @@ def unprocessable_entity(error: Exception) -> HttpResponse:
             "error": {"message": error},
         },
     ).to_dict()
+
+
+def not_found(error: Exception) -> HttpResponse:
+    return HttpResponse(
+        status_code=404,
+        body={
+            "type": "NotFound",
+            "error": {"message": error},
+        },
+    ).to_dict()
