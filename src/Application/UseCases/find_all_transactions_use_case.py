@@ -17,22 +17,8 @@ class FindAllTransactionsUseCase(UseCaseInterface):
             transactions = self.__transaction_repository.find_all_transactions()
             if not transactions:
                 return success({"message": "There are no transactions made"})
-            output = [
-                {
-                    "transaction_id": transaction[0],
-                    "transaction_value": float(transaction[1]),
-                    "client_id": transaction[2],
-                    "transaction_description": transaction[3],
-                    "payment_method": transaction[4],
-                    "card_number": transaction[5],
-                    "cardholder_name": transaction[6],
-                    "card_expiration": transaction[7],
-                    "cvv": transaction[8],
-                }
-                for transaction in transactions
-            ]
 
-            return success({"message": "Transaction list", "data": output})
+            return success({"message": "Transaction list", "data": transactions})
 
         except Exception as e:
             if isinstance(e, Exception):
