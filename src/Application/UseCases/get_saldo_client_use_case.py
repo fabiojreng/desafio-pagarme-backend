@@ -30,7 +30,7 @@ class GetSaldoClientUseCase(UseCaseInterface):
             if not client:
                 return not_found("Client not found")
 
-            payables = self.__payable_repository.get_payble_client(
+            payables = self.__payable_repository.get_paybles_client(
                 params["client_id"],
                 params["status"],
             )
@@ -40,11 +40,11 @@ class GetSaldoClientUseCase(UseCaseInterface):
                     {
                         "message": "Client does not have a {} balance".format(
                             params["status"]
-                        ),
+                        )
                     }
                 )
 
-            values = [float(amount[2]) for amount in payables]
+            values = [payable["amount"] for payable in payables]
             saldo = 0.0
             for value in values:
                 saldo += value
