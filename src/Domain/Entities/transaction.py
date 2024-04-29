@@ -55,29 +55,6 @@ class Transaction:
             CVV(cvv),
         )
 
-    def restore(
-        transaction_id: str,
-        transaction_value: float,
-        client_id: str,
-        transaction_description: str,
-        payment_method: str,
-        card_number: str,
-        cardholder_name: str,
-        card_expiration: str,
-        cvv: str,
-    ):
-        return Transaction(
-            transaction_id,
-            TransactionValue(transaction_value),
-            client_id,
-            TransactionDescription(transaction_description),
-            PaymentMethod(payment_method),
-            CardNumber(card_number),
-            Name(cardholder_name),
-            CardExpiration(card_expiration),
-            CVV(cvv),
-        )
-
     def to_dict(self):
         return {
             "transaction_id": str(self.__transaction_id),
