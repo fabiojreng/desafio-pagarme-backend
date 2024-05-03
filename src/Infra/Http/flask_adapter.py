@@ -12,7 +12,10 @@ class FlaskAdapter(HttpServer):
         def flask_callback(*args, **kwargs):
             try:
                 if request.method == "GET":
-                    output = callback(request.view_args)
+                    if request.view_args:
+                        output = callback(request.view_args)
+                    else:
+                        output = callback()
 
                 else:
                     output = callback(request.json)
