@@ -37,8 +37,8 @@ class MainController:
         output = self.__create_client_use_case.execute(req)
         return output
 
-    def __transactions(self, req):
-        output = self.__find_all_transactions.execute(req)
+    def __transactions(self):
+        output = self.__find_all_transactions.execute()
         return output
 
     def __calculate_saldo(self, req):
