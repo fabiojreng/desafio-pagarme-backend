@@ -13,7 +13,7 @@ class CreateClientUseCase(UseCaseInterface):
     def __init__(self, client_repository: ClientRepositoryInterface) -> None:
         self.__client_repository = client_repository
 
-    def execute(self, params: any) -> HttpResponse:
+    def execute(self, params: any = None) -> HttpResponse:
         try:
             client_exists = self.__client_repository.get_client_email(params["email"])
             if client_exists:

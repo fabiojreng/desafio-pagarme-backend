@@ -20,7 +20,7 @@ class GetSaldoClientUseCase(UseCaseInterface):
         self.__client_repository = client_repository
         self.__payable_repository = payable_repository
 
-    def execute(self, params: any) -> HttpResponse:
+    def execute(self, params: any = None) -> HttpResponse:
         try:
             valid_params = ["Paid", "Waiting_funds"]
             if params["status"] not in valid_params:

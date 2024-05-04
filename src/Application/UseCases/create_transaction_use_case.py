@@ -25,7 +25,7 @@ class CreateTransactionUseCase(UseCaseInterface):
         self.__client_repository = client_repository
         self.__payble_repository = payable_repository
 
-    def execute(self, params: any) -> HttpResponse:
+    def execute(self, params: any = None) -> HttpResponse:
         try:
             client = self.__client_repository.get_client_id(params["client_id"])
             if not client:

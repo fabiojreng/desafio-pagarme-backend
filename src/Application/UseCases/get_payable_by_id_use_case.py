@@ -13,7 +13,7 @@ class GetPayableById(UseCaseInterface):
     def __init__(self, payable_repository: PayableRepositoryInterface) -> None:
         self.__payable_repository = payable_repository
 
-    def execute(self, params: any) -> HttpResponse:
+    def execute(self, params: any = None) -> HttpResponse:
         try:
             payable = self.__payable_repository.get_payble_id(params["payable_id"])
             if not payable:
