@@ -29,7 +29,7 @@ class Client:
         return self.__id
 
     def get_name(self):
-        return self.__name
+        return self.__name.get_value()
 
     def get_email(self):
-        return self.__email
+        return self.__email.get_value()

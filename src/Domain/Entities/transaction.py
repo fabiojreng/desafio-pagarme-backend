@@ -72,25 +72,25 @@ class Transaction:
         return self.__transaction_id
 
     def get_transaction_value(self):
-        return self.__transaction_value
+        return self.__transaction_value.get_value()
 
     def get_client_id(self):
         return self.__client_id
 
     def get_transaction_description(self):
-        return self.__transaction_description
+        return self.__transaction_description.get_value()
 
     def get_cardholder_name(self):
-        return self.__cardholder_name
+        return self.__cardholder_name.get_value()
 
     def get_card_expiration(self):
-        return self.__card_expiration
+        return self.__card_expiration.get_value()
 
     def get_card_number(self):
-        return self.__card_number
+        return self.__card_number.get_value()
 
     def get_payment_method(self):
-        return self.__payment_method
+        return self.__payment_method.get_value()
 
     def get_cvv(self):
-        return self.__cvv
+        return self.__cvv.get_value()
